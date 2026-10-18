@@ -3,7 +3,7 @@
 Thiết kế lại thẻ sản phẩm và lưới danh sách sản phẩm cho website thời trang, tham khảo YODY (yody.vn).
 Bài tập cá nhân Chương 1 – Phát triển ứng dụng WEB/TMĐT.
 
-- **Xem trang demo:** *(dán link GitHub Pages vào đây sau khi bật Pages)*
+- **Xem trang demo:** *(https://minhnguyet17.github.io/ecommerce-ui-improvement/)*
 - **Sinh viên:** Nguyễn Thị Minh Nguyệt – 87251020135
 
 ## 1. Giới thiệu
