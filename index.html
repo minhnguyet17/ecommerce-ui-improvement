@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo Fashion – Cải tiến thẻ sản phẩm</title>
+  <meta name="description" content="Bài tập HTML/CSS: thiết kế lại thẻ sản phẩm và lưới danh sách sản phẩm cho website thời trang.">
+  <!-- Trang không dùng favicon; dòng này tránh lỗi 404 favicon.ico trong Console -->
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Thông báo: đây là trang demo cho bài tập, không phải cửa hàng thật -->
+  <p class="demo-note">Trang demo cho bài tập môn Phát triển ứng dụng TMĐT · Sản phẩm và giá là dữ liệu mẫu, không phải website bán hàng thật.</p>
+
+  <!-- 1. HEADER: tên cửa hàng + giỏ hàng -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="logo" href="index.html">Demo<span>Fashion</span></a>
+      <a class="cart-link" href="#" aria-label="Giỏ hàng: 0 sản phẩm">
+        <svg class="cart-link__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M6 7h12l-1 13H7L6 7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M9 9V6a3 3 0 0 1 6 0v3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <span class="cart-link__text">Giỏ hàng</span>
+        <span class="cart-link__count">0</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- 2. NỘI DUNG CHÍNH -->
+  <main class="container">
+    <div class="page-head">
+      <h1 class="page-title">Áo &amp; quần bán chạy</h1>
+      <p class="page-count">8 sản phẩm</p>
+    </div>
+
+    <!-- Lưới sản phẩm: 2 cột (điện thoại), 3 cột (tablet), 4 cột (máy tính) -->
+    <section class="product-grid" aria-label="Danh sách sản phẩm">
+
+      <!-- Sản phẩm 1: có giảm giá, size 2XL hết hàng -->
+      <article class="product-card">
+        <a class="product-card__media" href="#" tabindex="-1" aria-hidden="true">
+          <img src="images/ao-polo-nam.svg" alt="Áo polo nam màu xanh da trời, cổ bo kẻ trắng" width="600" height="800">
+        </a>
+        <div class="product-card__body">
+          <h2 class="product-card__name">
+            <a href="#" title="Áo Polo Nam Cổ Bo Kẻ Thoáng Khí Dáng Regular">Áo Polo Nam Cổ Bo Kẻ Thoáng Khí Dáng Regular</a>
+          </h2>
+          <p class="price">
+            <span class="price__sale"><span class="sr-only">Giá khuyến mãi: </span>279.000đ</span>
+            <span class="price__discount">-20%</span>
+            <del class="price__original"><span class="sr-only">Giá gốc: </span>349.000đ</del>
+          </p>
+          <p class="price-save">Tiết kiệm 70.000đ</p>
+          <div class="product-card__actions">
+            <fieldset class="size-picker">
+              <legend class="size-picker__legend">Chọn size</legend>
+              <div class="size-picker__options">
+                <input type="radio" name="size-p1" id="p1-s" value="S">
+                <label for="p1-s">S</label>
+                <input type="radio" name="size-p1" id="p1-m" value="M">
+                <label for="p1-m">M</label>
+                <input type="radio" name="size-p1" id="p1-l" value="L">
+                <label for="p1-l">L</label>
+                <input type="radio" name="size-p1" id="p1-xl" value="XL">
+                <label for="p1-xl">XL</label>
+                <input type="radio" name="size-p1" id="p1-2xl" value="2XL" disabled>
+                <label for="p1-2xl" title="Hết hàng">2XL<span class="sr-only"> (hết hàng)</span></label>
+              </div>
+            </fieldset>
+            <p class="hint">Chọn size trước khi thêm vào giỏ</p>
+            <button class="btn-add" type="button">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sản phẩm 2: có giảm giá -->
+      <article class="product-card">
+        <a class="product-card__media" href="#" tabindex="-1" aria-hidden="true">
+          <img src="images/ao-khoac-gio-nam.svg" alt="Áo khoác gió nam màu xanh than, có mũ và khóa kéo" width="600" height="800">
+        </a>
+        <div class="product-card__body">
+          <h2 class="product-card__name">
+            <a href="#" title="Áo Khoác Gió Nam Có Mũ Tháo Rời, Cản Gió Nhẹ">Áo Khoác Gió Nam Có Mũ Tháo Rời, Cản Gió Nhẹ</a>
+          </h2>
+          <p class="price">
+            <span class="price__sale"><span class="sr-only">Giá khuyến mãi: </span>399.000đ</span>
+            <span class="price__discount">-20%</span>
+            <del class="price__original"><span class="sr-only">Giá gốc: </span>499.000đ</del>
+          </p>
+          <p class="price-save">Tiết kiệm 100.000đ</p>
+          <div class="product-card__actions">
+            <fieldset class="size-picker">
+              <legend class="size-picker__legend">Chọn size</legend>
+              <div class="size-picker__options">
+                <input type="radio" name="size-p2" id="p2-m" value="M">
+                <label for="p2-m">M</label>
+                <input type="radio" name="size-p2" id="p2-l" value="L">
+                <label for="p2-l">L</label>
+                <input type="radio" name="size-p2" id="p2-xl" value="XL">
+                <label for="p2-xl">XL</label>
+                <input type="radio" name="size-p2" id="p2-2xl" value="2XL">
+                <label for="p2-2xl">2XL</label>
+              </div>
+            </fieldset>
+            <p class="hint">Chọn size trước khi thêm vào giỏ</p>
+            <button class="btn-add" type="button">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sản phẩm 3: giá thường, size 27 hết hàng -->
+      <article class="product-card">
+        <a class="product-card__media" href="#" tabindex="-1" aria-hidden="true">
+          <img src="images/quan-jeans-nu.svg" alt="Quần jeans nữ ống rộng màu xanh denim" width="600" height="800">
+        </a>
+        <div class="product-card__body">
+          <h2 class="product-card__name">
+            <a href="#" title="Quần Jeans Nữ Ống Rộng Cạp Cao">Quần Jeans Nữ Ống Rộng Cạp Cao</a>
+          </h2>
+          <p class="price">
+            <span class="price__regular">449.000đ</span>
+          </p>
+          <div class="product-card__actions">
+            <fieldset class="size-picker">
+              <legend class="size-picker__legend">Chọn size</legend>
+              <div class="size-picker__options">
+                <input type="radio" name="size-p3" id="p3-26" value="26">
+                <label for="p3-26">26</label>
+                <input type="radio" name="size-p3" id="p3-27" value="27" disabled>
+                <label for="p3-27" title="Hết hàng">27<span class="sr-only"> (hết hàng)</span></label>
+                <input type="radio" name="size-p3" id="p3-28" value="28">
+                <label for="p3-28">28</label>
+                <input type="radio" name="size-p3" id="p3-29" value="29">
+                <label for="p3-29">29</label>
+              </div>
+            </fieldset>
+            <p class="hint">Chọn size trước khi thêm vào giỏ</p>
+            <button class="btn-add" type="button">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sản phẩm 4: tên rất dài để thử cắt 2 dòng -->
+      <article class="product-card">
+        <a class="product-card__media" href="#" tabindex="-1" aria-hidden="true">
+          <img src="images/ao-cardigan-nu.svg" alt="Áo len cardigan nữ màu kem, viền nâu" width="600" height="800">
+        </a>
+        <div class="product-card__body">
+          <h2 class="product-card__name">
+            <a href="#" title="Áo Len Cardigan Nữ Phối Viền Tương Phản Mềm Mịn Giữ Ấm">Áo Len Cardigan Nữ Phối Viền Tương Phản Mềm Mịn Giữ Ấm</a>
+          </h2>
+          <p class="price">
+            <span class="price__sale"><span class="sr-only">Giá khuyến mãi: </span>359.000đ</span>
+            <span class="price__discount">-28%</span>
+            <del class="price__original"><span class="sr-only">Giá gốc: </span>499.000đ</del>
+          </p>
+          <p class="price-save">Tiết kiệm 140.000đ</p>
+          <div class="product-card__actions">
+            <fieldset class="size-picker">
+              <legend class="size-picker__legend">Chọn size</legend>
+              <div class="size-picker__options">
+                <input type="radio" name="size-p4" id="p4-s" value="S">
+                <label for="p4-s">S</label>
+                <input type="radio" name="size-p4" id="p4-m" value="M">
+                <label for="p4-m">M</label>
+                <input type="radio" name="size-p4" id="p4-l" value="L" disabled>
+                <label for="p4-l" title="Hết hàng">L<span class="sr-only"> (hết hàng)</span></label>
+              </div>
+            </fieldset>
+            <p class="hint">Chọn size trước khi thêm vào giỏ</p>
+            <button class="btn-add" type="button">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sản phẩm 5: giá thường, tên ngắn -->
+      <article class="product-card">
+        <a class="product-card__media" href="#" tabindex="-1" aria-hidden="true">
+          <img src="images/ao-thun-nam.svg" alt="Áo thun nam cổ tròn màu xanh rêu" width="600" height="800" loading="lazy">
+        </a>
+        <div class="product-card__body">
+          <h2 class="product-card__name">
+            <a href="#" title="Áo Thun Nam Cotton Cổ Tròn">Áo Thun Nam Cotton Cổ Tròn</a>
+          </h2>
+          <p class="price">
+            <span class="price__regular">199.000đ</span>
+          </p>
+          <div class="product-card__actions">
+            <fieldset class="size-picker">
+              <legend class="size-picker__legend">Chọn size</legend>
+              <div class="size-picker__options">
+                <input type="radio" name="size-p5" id="p5-s" value="S">
+                <label for="p5-s">S</label>
+                <input type="radio" name="size-p5" id="p5-m" value="M">
+                <label for="p5-m">M</label>
+                <input type="radio" name="size-p5" id="p5-l" value="L">
+                <label for="p5-l">L</label>
+                <input type="radio" name="size-p5" id="p5-xl" value="XL">
+                <label for="p5-xl">XL</label>
+              </div>
+            </fieldset>
+            <p class="hint">Chọn size trước khi thêm vào giỏ</p>
+            <button class="btn-add" type="button">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sản phẩm 6: có giảm giá -->
+      <article class="product-card">
+        <a class="product-card__media" href="#" tabindex="-1" aria-hidden="true">
+          <img src="images/ao-so-mi-nu.svg" alt="Áo sơ mi nữ dài tay màu hồng phấn" width="600" height="800" loading="lazy">
+        </a>
+        <div class="product-card__body">
+          <h2 class="product-card__name">
+            <a href="#" title="Áo Sơ Mi Nữ Oxford Dài Tay Dáng Suông">Áo Sơ Mi Nữ Oxford Dài Tay Dáng Suông</a>
+          </h2>
+          <p class="price">
+            <span class="price__sale"><span class="sr-only">Giá khuyến mãi: </span>299.000đ</span>
+            <span class="price__discount">-25%</span>
+            <del class="price__original"><span class="sr-only">Giá gốc: </span>399.000đ</del>
+          </p>
+          <p class="price-save">Tiết kiệm 100.000đ</p>
+          <div class="product-card__actions">
+            <fieldset class="size-picker">
+              <legend class="size-picker__legend">Chọn size</legend>
+              <div class="size-picker__options">
+                <input type="radio" name="size-p6" id="p6-s" value="S">
+                <label for="p6-s">S</label>
+                <input type="radio" name="size-p6" id="p6-m" value="M">
+                <label for="p6-m">M</label>
+                <input type="radio" name="size-p6" id="p6-l" value="L">
+                <label for="p6-l">L</label>
+                <input type="radio" name="size-p6" id="p6-xl" value="XL">
+                <label for="p6-xl">XL</label>
+              </div>
+            </fieldset>
+            <p class="hint">Chọn size trước khi thêm vào giỏ</p>
+            <button class="btn-add" type="button">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sản phẩm 7: giá thường, 5 size -->
+      <article class="product-card">
+        <a class="product-card__media" href="#" tabindex="-1" aria-hidden="true">
+          <img src="images/quan-au-nam.svg" alt="Quần âu nam dáng slim màu xám than" width="600" height="800" loading="lazy">
+        </a>
+        <div class="product-card__body">
+          <h2 class="product-card__name">
+            <a href="#" title="Quần Âu Nam Dáng Slim Co Giãn Bốn Chiều">Quần Âu Nam Dáng Slim Co Giãn Bốn Chiều</a>
+          </h2>
+          <p class="price">
+            <span class="price__regular">549.000đ</span>
+          </p>
+          <div class="product-card__actions">
+            <fieldset class="size-picker">
+              <legend class="size-picker__legend">Chọn size</legend>
+              <div class="size-picker__options">
+                <input type="radio" name="size-p7" id="p7-29" value="29">
+                <label for="p7-29">29</label>
+                <input type="radio" name="size-p7" id="p7-30" value="30">
+                <label for="p7-30">30</label>
+                <input type="radio" name="size-p7" id="p7-31" value="31">
+                <label for="p7-31">31</label>
+                <input type="radio" name="size-p7" id="p7-32" value="32">
+                <label for="p7-32">32</label>
+                <input type="radio" name="size-p7" id="p7-33" value="33">
+                <label for="p7-33">33</label>
+              </div>
+            </fieldset>
+            <p class="hint">Chọn size trước khi thêm vào giỏ</p>
+            <button class="btn-add" type="button">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sản phẩm 8: có giảm giá -->
+      <article class="product-card">
+        <a class="product-card__media" href="#" tabindex="-1" aria-hidden="true">
+          <img src="images/ao-giu-nhiet-nu.svg" alt="Áo giữ nhiệt nữ dài tay cổ tròn màu đỏ đô" width="600" height="800" loading="lazy">
+        </a>
+        <div class="product-card__body">
+          <h2 class="product-card__name">
+            <a href="#" title="Áo Giữ Nhiệt Nữ Cổ Tròn Siêu Nhẹ Ôm Vừa">Áo Giữ Nhiệt Nữ Cổ Tròn Siêu Nhẹ Ôm Vừa</a>
+          </h2>
+          <p class="price">
+            <span class="price__sale"><span class="sr-only">Giá khuyến mãi: </span>179.000đ</span>
+            <span class="price__discount">-28%</span>
+            <del class="price__original"><span class="sr-only">Giá gốc: </span>249.000đ</del>
+          </p>
+          <p class="price-save">Tiết kiệm 70.000đ</p>
+          <div class="product-card__actions">
+            <fieldset class="size-picker">
+              <legend class="size-picker__legend">Chọn size</legend>
+              <div class="size-picker__options">
+                <input type="radio" name="size-p8" id="p8-s" value="S">
+                <label for="p8-s">S</label>
+                <input type="radio" name="size-p8" id="p8-m" value="M">
+                <label for="p8-m">M</label>
+                <input type="radio" name="size-p8" id="p8-l" value="L">
+                <label for="p8-l">L</label>
+              </div>
+            </fieldset>
+            <p class="hint">Chọn size trước khi thêm vào giỏ</p>
+            <button class="btn-add" type="button">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- 3. FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>Bài tập cá nhân Chương 1 – Phát triển ứng dụng WEB/TMĐT · Sinh viên: <strong>Nguyễn Thị Minh Nguyệt - 87251020135</strong></p>
+      <p>Bố cục tham khảo cách trình bày của yody.vn. Ảnh minh họa tự vẽ, không dùng hình ảnh có bản quyền.</p>
+    </div>
+  </footer>
+</body>
+</html>

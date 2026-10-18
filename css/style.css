@@ -1,0 +1,496 @@
+/* =========================================================
+   Demo Fashion – Cải tiến thẻ sản phẩm (Bài tập Chương 1)
+   Viết theo hướng mobile-first: CSS mặc định cho điện thoại,
+   media query ở cuối file mở rộng cho tablet và máy tính.
+
+   1. Biến (màu, bo góc, khoảng cách)
+   2. Nền tảng (reset nhẹ, font, ảnh)
+   3. Bố cục trang (thông báo, header, tiêu đề, footer)
+   4. Lưới sản phẩm (CSS Grid)
+   5. Thẻ sản phẩm (ảnh, tên, giá, size, nút)
+   6. Trạng thái (hover, focus, chọn size, hết hàng)
+   7. Responsive (tablet, máy tính)
+   ========================================================= */
+
+
+/* ---------- 1. BIẾN ---------- */
+:root {
+  --color-text: #111827;
+  --color-muted: #6b7280;          /* chữ phụ: giá gốc, ghi chú */
+  --color-border: #e5e7eb;
+  --color-bg: #f6f7f9;             /* nền trang */
+  --color-surface: #ffffff;        /* nền thẻ, header */
+  --color-primary: #1e3a8a;        /* nút chính */
+  --color-primary-dark: #172e6e;
+  --color-primary-soft: #eef2ff;
+  --color-sale: #c81e1e;           /* giá khuyến mãi, nhãn % giảm */
+  --color-success: #047857;        /* số tiền tiết kiệm */
+  --color-focus: #1d4ed8;          /* viền khi dùng bàn phím */
+
+  --radius: 12px;
+  --radius-sm: 8px;
+  --gap: 12px;                     /* khoảng cách giữa các thẻ */
+  --container-padding: 12px;       /* lề trái/phải của trang */
+
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+
+/* ---------- 2. NỀN TẢNG ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Ẩn chữ trên màn hình nhưng trình đọc màn hình vẫn đọc được */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* ---------- 3. BỐ CỤC TRANG ---------- */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.demo-note {
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  text-align: center;
+  color: #3730a3;
+  background: #eef2ff;
+}
+
+/* Header dính trên cùng khi cuộn */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.logo span {
+  margin-left: 4px;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.cart-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 8px;
+  font-weight: 600;
+}
+
+.cart-link__icon {
+  width: 22px;
+  height: 22px;
+}
+
+.cart-link__count {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  line-height: 20px;
+  text-align: center;
+  color: #fff;
+  background: var(--color-sale);
+}
+
+.page-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 20px 0 12px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+
+.page-count {
+  margin: 0;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  color: var(--color-muted);
+}
+
+.site-footer {
+  margin-top: 40px;
+  padding: 20px 0 28px;
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.site-footer p {
+  margin: 4px 0;
+}
+
+
+/* ---------- 4. LƯỚI SẢN PHẨM ---------- */
+/* Điện thoại: 2 cột. minmax(0, 1fr) giúp tên dài không đẩy tràn cột */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+
+/* ---------- 5. THẺ SẢN PHẨM ---------- */
+/* Thẻ xếp dọc bằng Flexbox để đẩy phần mua hàng xuống đáy thẻ */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.product-card__media {
+  display: block;
+  background: #eef0f3;             /* màu nền trong lúc ảnh đang tải */
+}
+
+.product-card__media img {
+  width: 100%;
+  aspect-ratio: 3 / 4;             /* giữ tỉ lệ ảnh 3:4, không bị méo */
+  object-fit: cover;
+}
+
+.product-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+}
+
+/* Tên sản phẩm: tối đa 2 dòng, dài hơn thì hiện dấu "…".
+   min-height giữ đủ chỗ cho 2 dòng để các thẻ đều nhau */
+.product-card__name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  min-height: 4.2em;
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Khối giá: giá bán – % giảm – giá gốc nằm cùng một chỗ, tự xuống dòng khi hẹp */
+.price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 6px;
+  margin: 0;
+}
+
+.price__sale,
+.price__regular {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.price__sale {
+  color: var(--color-sale);
+}
+
+.price__discount {
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-sale);
+}
+
+.price__original {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.price-save {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-success);
+}
+
+/* Phần mua hàng: margin-top: auto đẩy xuống đáy thẻ,
+   nên nút của các thẻ trong cùng hàng luôn thẳng hàng */
+.product-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.size-picker {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.size-picker__legend {
+  margin-bottom: 6px;
+  padding: 0;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.size-picker__options {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* Ẩn nút radio gốc, dùng label làm ô bấm (vẫn dùng được bàn phím) */
+.size-picker input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.size-picker label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  user-select: none;
+}
+
+.hint {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.btn-add {
+  width: 100%;
+  min-height: 44px;                /* vùng bấm đủ lớn cho ngón tay */
+  padding: 0 12px;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+
+/* ---------- 6. TRẠNG THÁI ---------- */
+.size-picker label:hover {
+  border-color: var(--color-text);
+}
+
+/* Size đang chọn */
+.size-picker input:checked + label {
+  color: #fff;
+  background: var(--color-text);
+  border-color: var(--color-text);
+}
+
+/* Viền khi chọn size bằng bàn phím */
+.size-picker input:focus-visible + label {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Size hết hàng: mờ, gạch ngang, không bấm được */
+.size-picker input:disabled + label {
+  color: #9ca3af;
+  text-decoration: line-through;
+  background: #f3f4f6;
+  border-color: var(--color-border);
+  cursor: not-allowed;
+}
+
+/* Tên sản phẩm bị cắt bởi overflow nên dùng gạch chân thay cho viền focus */
+.product-card__name a:hover,
+.product-card__name a:focus-visible {
+  text-decoration: underline;
+}
+
+.product-card__name a:focus-visible {
+  outline: none;
+  color: var(--color-focus);
+  text-decoration-thickness: 2px;
+}
+
+.btn-add:hover {
+  background: var(--color-primary-soft);
+}
+
+.btn-add:active {
+  transform: scale(0.98);
+}
+
+/* Khi thẻ đã có size được chọn (:has): nút đổi sang màu đậm, ẩn dòng nhắc */
+.product-card:has(.size-picker input:checked) .btn-add {
+  color: #fff;
+  background: var(--color-primary);
+}
+
+.product-card:has(.size-picker input:checked) .btn-add:hover {
+  background: var(--color-primary-dark);
+}
+
+.product-card:has(.size-picker input:checked) .hint {
+  display: none;
+}
+
+/* Hiệu ứng nhấc thẻ chỉ áp dụng cho thiết bị có chuột */
+@media (hover: hover) {
+  .product-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+  }
+}
+
+/* Tôn trọng cài đặt "giảm chuyển động" của người dùng */
+@media (prefers-reduced-motion: reduce) {
+  .product-card,
+  .btn-add {
+    transition: none;
+  }
+
+  .product-card:hover,
+  .btn-add:active {
+    transform: none;
+  }
+}
+
+
+/* ---------- 7. RESPONSIVE ---------- */
+/* Tablet: từ 600px trở lên → 3 cột */
+@media (min-width: 600px) {
+  :root {
+    --gap: 16px;
+    --container-padding: 20px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .product-card__name {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    min-height: 2.8em;
+  }
+  .product-card__body {
+    padding: 12px;
+  }
+
+  .page-title {
+    font-size: 1.625rem;
+  }
+}
+
+/* Máy tính: từ 1024px trở lên → 4 cột */
+@media (min-width: 1024px) {
+  :root {
+    --gap: 24px;
+    --container-padding: 24px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .product-card__name {
+    font-size: 0.9375rem;
+  }
+
+  .price__sale,
+  .price__regular {
+    font-size: 1.125rem;
+  }
+}
