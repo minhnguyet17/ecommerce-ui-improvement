@@ -291,3 +291,322 @@ Quy ước: **Giữ** = đúng với website · **Sửa** = đúng một phần,
 | `input:checked + label`, `input:disabled + label` | Bộ chọn kề cạnh (`+`): tô ô size theo trạng thái của nút radio đứng ngay trước nó |
 | `.product-card:has(input:checked) .btn-add` | Khi trong thẻ có size được chọn thì đổi nút sang màu đậm và ẩn dòng nhắc, không cần JavaScript |
 | `:focus-visible` | Hiện viền xanh khi dùng bàn phím, giúp người không dùng chuột biết mình đang ở đâu |
+
+---
+
+# Buổi 2 – HTML5 & CSS3 (31/10/2026)
+
+## 1. Công cụ AI
+
+**Claude Code** (Anthropic, mô hình Claude Opus 5.5), dùng trong tiện ích Claude Code của VS Code. AI đọc và sửa trực tiếp các tệp trong thư mục dự án và dùng Chrome ở chế độ không giao diện để chụp ảnh, đo bố cục.
+
+## 2. Prompt đã sử dụng
+
+Tôi gửi một prompt duy nhất, kèm tệp đề bài `BaiTap_CaNhan_Buoi2.pdf` và ảnh bảng "15. Sản phẩm cần nộp":
+
+```text
+Đọc đề và làm theo yêu cầu của đề bài. Lưu ý bao gồm 8 sản phẩm cần hoàn thiện như hình nhé
+```
+
+## 3. Prompt chi tiết theo từng bước (Prompt 1–9 của đề)
+
+Mục 2 là prompt tôi thực sự gửi: một yêu cầu tổng hợp, AI làm lần lượt từng bước theo hướng dẫn của đề. Dưới đây là Prompt 1–9 của đề, điền theo bài của tôi, để ghi lại rõ yêu cầu, kết quả AI và phần tôi kiểm tra ở mỗi bước.
+
+### Prompt 1 – Phân tích mã nguồn hiện tại
+
+```text
+Tôi đang làm bài tập cá nhân môn Phát triển ứng dụng thương mại điện tử.
+
+Trong Buổi 1, tôi đã khảo sát website YODY (yody.vn) và tạo
+một giao diện cải tiến bằng HTML/CSS: lưới 8 thẻ sản phẩm, mỗi thẻ
+có ảnh, tên 2–3 dòng, khối giá khuyến mãi, chọn size và nút "Thêm vào giỏ".
+
+Đây là mã HTML hiện tại:
+[Dán toàn bộ index.html]
+
+Đây là mã CSS hiện tại:
+[Dán toàn bộ css/style.css]
+
+Khu vực tôi chọn để tiếp tục cải thiện: danh sách sản phẩm (lưới + thẻ sản phẩm).
+
+Hãy giúp tôi:
+1. Xác định những thành phần HTML đã có.
+2. Chỉ ra các thành phần HTML còn thiếu hoặc chưa hợp lý.
+3. Nêu ba vấn đề về cấu trúc HTML hoặc trình bày.
+4. Đề xuất cách cải thiện bằng kiến thức HTML5 và CSS3 cơ bản.
+5. Giải thích thứ tự nên thực hiện các cải tiến.
+
+Chưa viết lại toàn bộ mã nguồn.
+Không tạo website mới.
+Hãy giúp tôi hiểu mã hiện tại trước khi sửa.
+```
+
+**Kết quả AI:**
+- Liệt kê thành phần đã có: header (logo, giỏ hàng), `h1`, lưới Grid 2/3/4 cột, thẻ `article` có ảnh, tên `h2`, giá, chọn size, nút, footer.
+- Nêu 5 vấn đề: (1) 8 sản phẩm không được đánh dấu là danh sách, tiêu đề nằm ngoài `section`; (2) chỉ có 1 nút thao tác; (3) nút đổi màu tức thì, quy tắc `prefers-reduced-motion` nhắc tới `transition` không tồn tại; (4) nhấn Tab thì nút bị đổi góc bo 8px → 4px; (5) liên kết sản phẩm và giỏ hàng là `href="#"`.
+- Thứ tự đề xuất: sửa cấu trúc HTML trước, rồi CSS cho danh sách, Flexbox, hover/focus, cuối cùng kiểm tra trên nhiều kích thước màn hình.
+
+**Kiểm tra:** chụp ảnh trước khi sửa ở 1366/768/390 px. Tự nhấn Tab trên trang để thấy góc nút bị đổi khi có viền focus (vấn đề 4). Bấm thử tên sản phẩm để thấy trang nhảy lên đầu (vấn đề 5).
+
+### Prompt 2 – Kiểm tra cấu trúc HTML5
+
+```text
+Tôi đang học HTML5 và muốn cải thiện cấu trúc HTML của bài tập Buổi 1.
+
+Đây là mã HTML hiện tại:
+[Dán phần <main> của index.html: tiêu đề "Áo & quần bán chạy"
+và section.product-grid chứa 8 article.product-card]
+
+Hãy hướng dẫn tôi:
+1. Xác định các phần tử HTML đang được sử dụng.
+2. Kiểm tra cách sử dụng header, nav, main, section,
+   article và footer nếu có.
+3. Kiểm tra thứ bậc tiêu đề h1, h2, h3.
+4. Kiểm tra cách sử dụng img, alt và a.
+5. Phát hiện các thẻ chưa đóng hoặc lồng nhau chưa hợp lý.
+6. Đề xuất cách sửa phù hợp với nội dung hiện tại.
+
+Hãy phân biệt lỗi cần sửa và đề xuất cải thiện.
+Không thêm phần tử HTML chỉ để làm mã nguồn dài hơn.
+Không viết lại toàn bộ website.
+Giải thích lý do của từng thay đổi.
+```
+
+**Kết quả AI:**
+- Không có lỗi bắt buộc phải sửa: thẻ đóng mở đầy đủ, `h1` → `h2` đúng thứ bậc, ảnh đều có `alt` mô tả màu và kiểu dáng.
+- Đề xuất cải thiện: đổi `section.product-grid` thành `ul` > `li` > `article` vì nội dung là danh sách; bọc tiêu đề và số sản phẩm trong `header` bên trong `section`, nối bằng `aria-labelledby`.
+- Không thêm `nav` vì trang chưa có menu điều hướng.
+
+**Kiểm tra:** đếm thẻ đóng/mở sau khi sửa (`ul` 1/1, `li` 8/8, `article` 8/8, `div` 34/34, `button` 16/16). Mở trang thấy giao diện không đổi.
+
+### Prompt 3 – Tạo CSS cơ bản
+
+```text
+Tôi có website HTML5 từ bài tập Buổi 1.
+
+Cấu trúc thư mục:
+ecommerce-ui-improvement/
+├── index.html
+├── css/style.css
+├── images/ (8 ảnh SVG)
+├── KHAO_SAT.md, AI_USAGE.md, README.md
+
+Đoạn HTML:
+[Dán phần <head> của index.html]
+
+Hãy hướng dẫn tôi:
+1. Tạo và liên kết file css/style.css.
+2. Định dạng font chữ, màu chữ và màu nền.
+3. Thiết lập margin và các quy tắc cơ bản cho body.
+4. Đảm bảo hình ảnh không vượt quá chiều rộng phần tử chứa.
+5. Kiểm tra đường dẫn CSS có chính xác không.
+
+Chỉ tạo CSS cần thiết cho bài tập.
+Không sử dụng Bootstrap hoặc Tailwind CSS.
+Giải thích từng nhóm thuộc tính và hướng dẫn tôi cách kiểm tra bằng trình duyệt.
+```
+
+**Kết quả AI:** `css/style.css` đã có và liên kết đúng (`<link rel="stylesheet" href="css/style.css">`), đã có `box-sizing: border-box`, quy tắc `body` (margin, font, màu, nền, line-height) và `img { max-width: 100%; height: auto }` nên không cần tạo thêm. Cách kiểm tra: F12 → Network → F5 → `style.css` trạng thái 200.
+
+**Kiểm tra:** `style.css` trạng thái 200 trong tab Network; font `system-ui`, nền `#f6f7f9` được áp dụng.
+
+### Prompt 4 – Thực hành selector và Box Model
+
+```text
+Tôi muốn thực hành CSS selector và Box Model trên một thẻ sản phẩm
+trong website của mình.
+
+HTML hiện tại:
+[Dán 1 article.product-card, sau khi đã bọc trong ul.product-grid > li]
+
+Hãy hướng dẫn tôi:
+1. Sử dụng element selector và class selector.
+2. Sử dụng descendant selector khi phù hợp.
+3. Điều chỉnh margin, padding và border.
+4. Sử dụng border-radius để bo góc.
+5. Định dạng tên và giá sản phẩm.
+6. Định dạng liên kết thành nút thao tác đơn giản.
+
+Hãy giải thích sự khác nhau giữa margin và padding.
+Giải thích tác dụng của box-sizing: border-box.
+Chỉ đưa ra phần CSS cần thiết.
+Không thay đổi nội dung hoặc tạo lại toàn bộ HTML.
+```
+
+**Kết quả AI:**
+- Chỉ ra các loại selector đã có trong `style.css` (element, class, con cháu, kề cạnh, pseudo-class).
+- Đổi sang `ul` thì trình duyệt tự thêm `margin`, `padding-left: 40px` và dấu chấm đầu dòng, nên cần đặt lại `margin: 0; padding: 0; list-style: none`.
+- Thêm `.product-grid > li { display: flex }` và `.product-card { flex: 1; min-width: 0 }` để thẻ cao bằng ô lưới như trước.
+- Giải thích margin (bên ngoài viền) và padding (bên trong viền) bằng `.page-head` và `.product-card__body`.
+
+**Kiểm tra:** đo bằng Chrome: `list-style: none`, `padding-left: 0`; các thẻ cùng hàng cao bằng nhau ở cả 3 kích thước màn hình.
+
+### Prompt 5 – Thực hành Flexbox
+
+```text
+Tôi đang học CSS3 và muốn thực hành Flexbox trên một khu vực
+của website thương mại điện tử.
+
+Đây là HTML hiện tại:
+[Dán phần div.product-card__actions: fieldset chọn size,
+dòng nhắc và button.btn-add "Thêm vào giỏ"]
+
+Tôi muốn thêm nút "Yêu thích" (biểu tượng tim, chưa cần JavaScript)
+nằm cùng hàng với nút "Thêm vào giỏ".
+
+Hãy hướng dẫn tôi:
+1. Xác định phần tử cha cần sử dụng display: flex.
+2. Căn chỉnh các phần tử bằng justify-content.
+3. Căn chỉnh theo trục còn lại bằng align-items.
+4. Tạo khoảng cách bằng gap.
+5. So sánh kết quả khi thay đổi các giá trị của justify-content.
+
+Hãy đưa ra một đoạn CSS ngắn phù hợp với HTML.
+Giải thích từng thuộc tính và kết quả mong đợi.
+Không sử dụng framework CSS.
+Không viết lại toàn bộ giao diện.
+```
+
+**Kết quả AI:**
+- Bọc 2 nút trong `div.product-buy` (phần tử cha) với `display: flex; justify-content: space-between; align-items: center; gap: 8px`.
+- `.btn-add { flex: 1 }` để giãn ra, `.btn-fav { flex: 0 0 44px }` để giữ cố định 44px; nút tim có `aria-label="Yêu thích"` vì chỉ có biểu tượng.
+- Lưu ý `justify-content` không tạo khác biệt khi `.btn-add` có `flex: 1`; bỏ `flex: 1` thì nút tim bị đẩy sát phải.
+
+**Kiểm tra:** thử bỏ `flex: 1` và thấy đúng như AI nói. Ở 390 px phát hiện chữ "Thêm vào giỏ" bị xuống 2 dòng (xử lý ở Prompt 8).
+
+### Prompt 6 – Thực hành CSS Grid
+
+```text
+Tôi đã có một danh sách sản phẩm bằng HTML.
+
+Đây là mã HTML hiện tại:
+[Dán ul.product-grid với 8 li > article.product-card]
+
+Hãy hướng dẫn tôi sử dụng CSS Grid để:
+1. Bố trí danh sách thành hai cột.
+2. Điều chỉnh khoảng cách giữa các sản phẩm.
+3. Giữ hình ảnh hiển thị đúng tỷ lệ.
+4. Thay đổi số cột và quan sát kết quả.
+5. Giải thích grid-template-columns, repeat và gap.
+6. Giải thích tác dụng của object-fit: cover.
+
+Chỉ viết CSS cần thiết cho danh sách hiện có.
+Không sử dụng Bootstrap hoặc Tailwind CSS.
+Giải thích cách kiểm tra kết quả trên trình duyệt.
+```
+
+**Kết quả AI:** lưới từ Buổi 1 vẫn đúng sau khi đổi sang `ul`: 2 cột trên điện thoại, 3 cột từ 600 px, 4 cột từ 1024 px bằng `repeat(N, minmax(0, 1fr))`, `gap` 12/16/24 px. Ảnh dùng `aspect-ratio: 3 / 4` + `object-fit: cover`. Giải thích `minmax(0, 1fr)` giúp tên dài không đẩy tràn cột.
+
+**Kiểm tra:** đo số cột ở 390/768/1366 px được 2/3/4; 8/8 ảnh không méo.
+
+### Prompt 7 – Bổ sung hiệu ứng CSS
+
+```text
+Tôi muốn bổ sung hiệu ứng hover và focus cho một nút bấm
+hoặc liên kết trong website.
+
+Đây là HTML và CSS hiện tại:
+[Dán div.product-buy (2 nút), quy tắc .btn-add, .btn-add:hover,
+a:focus-visible / button:focus-visible và khối prefers-reduced-motion]
+
+Hãy hướng dẫn tôi:
+1. Tạo hiệu ứng hover nhẹ.
+2. Sử dụng transition để tạo chuyển đổi mượt.
+3. Bổ sung focus-visible để hỗ trợ điều hướng bằng bàn phím.
+4. Đảm bảo màu chữ và màu nền dễ nhìn.
+5. Không làm thay đổi bố cục quá nhiều.
+
+Hãy chỉ đưa ra phần CSS cần thêm hoặc sửa.
+Giải thích từng thuộc tính và cách kiểm tra.
+```
+
+**Kết quả AI:**
+- Thêm `transition: background-color 0.2s ease, color 0.2s ease` cho `.btn-add`.
+- Nút tim: chữ xám, `:hover` chuyển đỏ (`--color-sale`), nền `#fef2f2`, có `transition`.
+- Sửa lỗi góc bo: tách `border-radius: 4px` chỉ cho `a:focus-visible`.
+- Thêm `.btn-fav` vào khối `prefers-reduced-motion`.
+
+**Kiểm tra:** chụp ảnh focus trước/sau (`focus-truoc.png`, `focus-sau.png`). Tự nhấn Tab: viền xanh, nút giữ góc bo. Tự rê chuột vào nút tim: chuyển đỏ mượt.
+
+### Prompt 8 – Nhờ AI hỗ trợ kiểm tra lỗi
+
+```text
+Tôi đã hoàn thành một phần giao diện website TMĐT bằng HTML5 và CSS3.
+
+Đây là mã nguồn:
+[Dán div.product-buy và CSS của .product-card__body, .product-buy,
+.btn-add, .btn-fav, media query 600px]
+
+Tôi nhận thấy vấn đề sau:
+Ở chiều rộng 390 px, chữ "Thêm vào giỏ" bị xuống 2 dòng
+và nút cao hơn nút tim bên cạnh.
+
+Hãy giúp tôi:
+1. Xác định nguyên nhân có thể gây ra lỗi.
+2. Chỉ ra thuộc tính hoặc phần tử cần kiểm tra.
+3. Đề xuất cách sửa ít thay đổi nhất.
+4. Giải thích vì sao cách sửa có thể giải quyết vấn đề.
+5. Đề xuất cách kiểm tra sau khi sửa.
+
+Không viết lại toàn bộ mã nguồn.
+Phân biệt nguyên nhân đã xác định và giả thuyết cần kiểm tra.
+```
+
+**Kết quả AI:**
+- Nguyên nhân đã xác định: thẻ rộng khoảng 155 px sau padding; trừ nút tim 44 px và `gap` 8 px còn khoảng 103 px, không đủ cho chữ 15 px cộng padding 2 × 12 px.
+- Cách sửa: trên điện thoại `padding: 0 6px`, `font-size: 0.875rem`, `gap: 6px`; trả lại giá trị cũ trong `@media (min-width: 600px)`.
+- Lần kiểm tra đầu của AI dựa vào chiều cao nút (vẫn 44 px) nên kết luận sai. Đếm số dòng chữ thì 360 px và 375 px vẫn 2 dòng. AI thêm `line-height: 1.2` để 2 dòng gọn trong nút.
+
+**Kiểm tra:** bảng số dòng chữ ở 5 chiều rộng (mục 8.2 trong [BAO_CAO_BUOI2.md](BAO_CAO_BUOI2.md)). Tự xem trong DevTools ở 360 và 390 px.
+
+### Prompt 9 – Kiểm tra README
+
+```text
+Tôi đang hoàn thiện README.md cho bài tập cá nhân
+Buổi 2 của môn Phát triển ứng dụng TMĐT.
+
+Bài tập tiếp tục phát triển website từ Buổi 1.
+Tôi đã thực hành HTML5, CSS selector, Box Model
+và Flexbox hoặc CSS Grid ở mức cơ bản.
+
+Hãy đề xuất cấu trúc README ngắn gọn gồm:
+1. Giới thiệu bài tập.
+2. Website tham khảo và khu vực đã cải tiến.
+3. Những kỹ thuật HTML5/CSS3 đã thực hành.
+4. Hướng dẫn chạy website.
+5. Những thay đổi tôi đã thực hiện.
+6. Công cụ AI đã sử dụng và cách tôi kiểm tra kết quả.
+7. Đường dẫn repository và website nếu đã triển khai.
+
+Không tự bịa thông tin về dự án.
+Sử dụng chỗ trống cho các thông tin tôi chưa cung cấp.
+```
+
+**Kết quả AI:** giữ các mục 1–7 của Buổi 1, thêm mục 8 "Buổi 2" (khu vực cải tiến, kỹ thuật, bảng thay đổi, ảnh trước/sau, kết quả kiểm thử, công cụ AI). Cập nhật cây thư mục (thêm `screenshots/`, `BAO_CAO_BUOI2.md`). Để chỗ trống cho link repository và GitHub Pages.
+
+**Kiểm tra:** đọc lại README, đối chiếu từng con số (số ảnh, số mục kiểm thử, kích thước màn hình) với báo cáo.
+
+## 4. Kết quả AI tạo ra
+
+- `index.html`: cấu trúc `section` > `header` + `ul` > `li` > `article`; hàng nút `.product-buy` có nút tim (`aria-label="Yêu thích"`) trong cả 8 thẻ; sửa footer thành "Buổi 1–2".
+- `css/style.css`: đặt lại lề của `ul`; `.product-grid > li { display: flex }`; `.product-buy`, `.btn-fav`, `transition`, `:hover`; tách `border-radius` của viền focus chỉ cho liên kết; media query 600 px cho nút.
+- 12 ảnh trong `screenshots/` (trước/sau ở 3 kích thước, thẻ sản phẩm trước/sau, focus trước/sau, ảnh lỗi và ảnh sau khi sửa).
+- [BAO_CAO_BUOI2.md](BAO_CAO_BUOI2.md): Bước 1–8, bảng kiểm thử, trả lời 7 câu hỏi kiến thức, bảng chuẩn bị sửa mã trực tiếp.
+
+## 5. Kiểm tra và điều chỉnh
+
+| Kết quả ban đầu của AI | Vấn đề phát hiện khi kiểm tra | Điều chỉnh |
+|---|---|---|
+| Ảnh chụp 390 px cho thấy thẻ bên phải bị cắt, trang tràn ngang | Chrome không giao diện có cửa sổ tối thiểu khoảng 500 px; trang thật không tràn | Chụp lại trong khung đúng 390 px; đo `scrollWidth` để xác nhận không tràn ngang |
+| Thêm nút tim 44 px cạnh nút "Thêm vào giỏ" | Ở 390 px chữ "Thêm vào giỏ" xuống 2 dòng, nút cao lên | Điện thoại: `padding: 0 6px`, `font-size: 0.875rem`, `gap: 6px`; từ 600 px trả lại kích thước cũ |
+| Kiểm tra bản sửa bằng chiều cao nút (44 px) và kết luận đã ổn | 2 dòng chữ 14 px vẫn vừa 44 px nên phép đo sai; đếm số dòng thì 360 và 375 px vẫn 2 dòng | Thêm `line-height: 1.2` để 2 dòng gọn trong nút; ghi rõ giới hạn trong báo cáo |
+| Liên kết sản phẩm và giỏ hàng vẫn là `href="#"` | Bấm vào thì trang nhảy lên đầu | Chưa sửa vì cần trang chi tiết; ghi "Đạt một phần" trong bảng kiểm thử |
+
+## 6. Sinh viên tự kiểm tra lại
+
+- [x] Mở `index.html` bằng Chrome, F12 → Network → `style.css` trạng thái 200
+- [x] DevTools → giả lập thiết bị (Ctrl + Shift + M) ở 390 px: 2 cột, chữ "Thêm vào giỏ" trên 1 dòng, không có thanh cuộn ngang
+- [x] Ở 360 px: chữ nút xuống 2 dòng nhưng nút không cao lên
+- [x] Nhấn Tab tới nút "Thêm vào giỏ": viền xanh, góc nút vẫn bo tròn như cũ
+- [x] Rê chuột vào nút tim: biểu tượng và viền chuyển đỏ, chuyển màu mượt
+- [ ] Tự đổi một giá trị (ví dụ `gap` của `.product-buy`) để thấy kết quả, rồi trả lại như cũ

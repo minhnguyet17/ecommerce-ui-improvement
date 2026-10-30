@@ -1,5 +1,5 @@
 /* =========================================================
-   Demo Fashion – Cải tiến thẻ sản phẩm (Bài tập Chương 1)
+   Demo Fashion – Cải tiến thẻ sản phẩm (Bài tập Buổi 1, hoàn thiện ở Buổi 2)
    Viết theo hướng mobile-first: CSS mặc định cho điện thoại,
    media query ở cuối file mở rộng cho tablet và máy tính.
 
@@ -67,6 +67,11 @@ a:focus-visible,
 button:focus-visible {
   outline: 3px solid var(--color-focus);
   outline-offset: 2px;
+}
+
+/* Chỉ bo góc viền focus cho liên kết. Nút đã có border-radius riêng,
+   nếu đặt chung ở trên thì nút bị đổi góc bo 8px → 4px khi nhấn Tab (Buổi 2) */
+a:focus-visible {
   border-radius: 4px;
 }
 
@@ -197,6 +202,15 @@ button:focus-visible {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--gap);
+  margin: 0;                       /* bỏ lề và dấu chấm mặc định của <ul> */
+  padding: 0;
+  list-style: none;
+}
+
+/* Mỗi <li> là một ô lưới; dùng flex để thẻ bên trong cao bằng ô,
+   nhờ vậy các thẻ cùng hàng vẫn cao bằng nhau như khi chưa có <li> */
+.product-grid > li {
+  display: flex;
 }
 
 
@@ -204,7 +218,9 @@ button:focus-visible {
 /* Thẻ xếp dọc bằng Flexbox để đẩy phần mua hàng xuống đáy thẻ */
 .product-card {
   display: flex;
+  flex: 1;                         /* lấp đầy <li> */
   flex-direction: column;
+  min-width: 0;
   overflow: hidden;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -347,18 +363,54 @@ button:focus-visible {
   color: var(--color-muted);
 }
 
+/* Hàng nút mua (Buổi 2): Flexbox xếp "Thêm vào giỏ" và "Yêu thích" trên một hàng.
+   Nút "Thêm vào giỏ" chiếm phần còn lại (flex: 1), nút tim giữ cố định 44px */
+.product-buy {
+  display: flex;
+  justify-content: space-between;  /* thử nghiệm: không đổi gì vì .btn-add (flex: 1) đã lấp hết chỗ trống */
+  align-items: center;             /* căn giữa 2 nút theo chiều dọc */
+  gap: 6px;
+}
+
+/* Điện thoại: padding và cỡ chữ nhỏ hơn để "Thêm vào giỏ" nằm trên 1 dòng
+   bên cạnh nút tim từ 390px. Máy hẹp hơn (360–375px) chữ buộc phải xuống
+   2 dòng; line-height 1.2 giữ 2 dòng gọn trong nút 44px (xem BAO_CAO_BUOI2.md) */
 .btn-add {
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   min-height: 44px;                /* vùng bấm đủ lớn cho ngón tay */
-  padding: 0 12px;
+  padding: 0 6px;
   font: inherit;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
+  line-height: 1.2;
   font-weight: 700;
   color: var(--color-primary);
   background: var(--color-surface);
   border: 1.5px solid var(--color-primary);
   border-radius: var(--radius-sm);
   cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Nút "Yêu thích": hiện chỉ là giao diện, sẽ thêm chức năng bằng JavaScript ở Buổi 3 */
+.btn-fav {
+  display: inline-flex;
+  flex: 0 0 44px;                  /* không co, không giãn, rộng 44px */
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0;
+  color: var(--color-muted);
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-fav svg {
+  width: 20px;
+  height: 20px;
 }
 
 
@@ -409,6 +461,12 @@ button:focus-visible {
   transform: scale(0.98);
 }
 
+.btn-fav:hover {
+  color: var(--color-sale);
+  background: #fef2f2;
+  border-color: var(--color-sale);
+}
+
 /* Khi thẻ đã có size được chọn (:has): nút đổi sang màu đậm, ẩn dòng nhắc */
 .product-card:has(.size-picker input:checked) .btn-add {
   color: #fff;
@@ -438,7 +496,8 @@ button:focus-visible {
 /* Tôn trọng cài đặt "giảm chuyển động" của người dùng */
 @media (prefers-reduced-motion: reduce) {
   .product-card,
-  .btn-add {
+  .btn-add,
+  .btn-fav {
     transition: none;
   }
 
@@ -467,6 +526,15 @@ button:focus-visible {
   }
   .product-card__body {
     padding: 12px;
+  }
+
+  .product-buy {
+    gap: 8px;
+  }
+
+  .btn-add {
+    padding: 0 12px;
+    font-size: 0.9375rem;
   }
 
   .page-title {
